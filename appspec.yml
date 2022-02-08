@@ -5,19 +5,19 @@ files:
     destination: /root/ubuntu/autobuild/
 hooks:
   BeforeInstall:
-    - location: /home/ubuntu/scripts/install_dependencies.sh #/scripts/install_dependencies.sh
+    - location: scripts/install_dependencies.sh #/scripts/install_dependencies.sh
       timeout: 300
       runas: root
   AfterInstall:
-    - location: /home/ubuntu/scripts/change_permissions.sh
+    - location: scripts/change_permissions.sh
       timeout: 300
       runas: root
   ApplicationStart:
-    - location: /home/ubuntu/scripts/start_server.sh
-    - location: /home/ubuntu/scripts/create_test_db.sh
+    - location: scripts/start_server.sh
+    - location: scripts/create_test_db.sh
       timeout: 300
       runas: root
   ApplicationStop:
-    - location: /home/ubuntu/scripts/stop_server.sh
+    - location: scripts/stop_server.sh
       timeout: 300
       runas: root
