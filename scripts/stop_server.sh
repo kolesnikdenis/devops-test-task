@@ -2,7 +2,6 @@
 (
 echo " 
 `date` : stop_server.sh"
-rm -rf /home/ubuntu/autobuild/ 
 docker service rm test  && \
 docker rmi localhost:5000/devops-test-task
 
