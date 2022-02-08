@@ -2,10 +2,10 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /root/ubuntu/autobuild/
+    destination: /home/ubuntu/autobuild/
 hooks:
   BeforeInstall:
-    - location: scripts/install_dependencies.sh #/scripts/install_dependencies.sh
+    - location: scripts/install_dependencies.sh
       timeout: 300
       runas: root
   AfterInstall:

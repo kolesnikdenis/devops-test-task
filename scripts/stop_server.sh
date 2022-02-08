@@ -1,9 +1,8 @@
 #!/bin/bash 
 (
-echo " `date` : stop_server.sh"
-ls -ls /home/ubuntu/
-echo "/home/ubuntu/scripts/stop_server.sh"
+echo " 
+`date` : stop_server.sh"
+docker service rm test  && \
+docker rmi localhost:5000/devops-test-task
 
-) | tee -a /home/ubuntu/scripts/stop_server.sh
-
-
+) | tee -a /home/ubuntu/scripts/stop_server.log
