@@ -7,6 +7,8 @@ phases:
   build:
     commands:
       - npm test
+  batch:
+    fast-fail: false
 artifacts:
   files:
     - '**/*'
