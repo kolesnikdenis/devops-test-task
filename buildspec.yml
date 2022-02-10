@@ -1,14 +1,8 @@
-version: 0.2
+batch:
+  fast-fail: false
+  build-list:
+    - identifier: devops-test-task
+     env:
+        variables:
+          IMAGE:  100230956415.dkr.ecr.eu-north-1.amazonaws.com/test:autobuild_test
 
-phases:
-  install:
-    commands:
-      - npm install
-  build:
-    commands:
-      - npm test
-  batch:
-    fast-fail: false
-artifacts:
-  files:
-    - '**/*'
