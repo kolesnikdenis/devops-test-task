@@ -1,31 +1,47 @@
 version: 0.2
-#batch:
-#  fast-fail: false
+
+env:
+  variables:
+    AWS_REGION: eu-north-1
+    AWS_ACCOUNT_ID: 100230956415
+    AWS_SERVICE_NAME: .dkr.ecr.
+    AWS_DOMAIN_NAME: .amazonaws.com
+    IMAGE_NAME: test
+    CONTAINER_NAME: autobuild_test
+
+
 phases:
   install:
+    runtime-versions:
+      java: corretto8
     commands:
-      - echo test
   pre_build:
     commands:
+      - REPOSITORY_URL="$AWS_ACCOUNT_ID$AWS_SERVICE_NAME$AWS_REGION$AWS_DOMAIN_NAME"
+      - echo $REPOSITORY_URL
+      - echo Setting up docker
+      - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2 &
+      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
       - echo Logging in to Amazon ECR...
-      - aws --version
-      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-     #- REPOSITORY_URI=012345678910.dkr.ecr.us-east-1.amazonaws.com/base-image
-     #- COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-     #- IMAGE_TAG=${COMMIT_HASH:=latest}
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $REPOSITORY_URL
   build:
     commands:
       - echo Build started on `date`
-      - echo Building the Docker image...
-     #- docker build -t $REPOSITORY_URI:latest .
-     #- docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+      - 'mvn clean package'
   post_build:
     commands:
+      - docker image build -t $IMAGE_NAME .
+      - docker image tag $IMAGE_NAME:latest $REPOSITORY_URL/$IMAGE_NAME:latest
+      - echo image name =  $IMAGE_NAME:latest
+      - echo image url = $REPOSITORY_URL/$IMAGE_NAME:latest
+      - docker push $REPOSITORY_URL/$IMAGE_NAME:latest
+      - echo Writing image definitions file...
+#       name is a container name from the task definition
+      - printf '[{"name":"'"$CONTAINER_NAME"'","imageUri":"'"$REPOSITORY_URL"'/'"$IMAGE_NAME"':latest"}]' > imagedefinitions.json
+      - cat imagedefinitions.json
       - echo Build completed on `date`
-      - echo Pushing the Docker images...
-    # - docker push $REPOSITORY_URI:latest
-    # - docker push $REPOSITORY_URI:$IMAGE_TAG
-artifacts:
-  files:
-      - '**/*'
-  name: $AWS_REGION-$(date +%Y-%m-%d)
+
+
+#artifacts:
+#  files:
+#    - imagedefinitions.json
