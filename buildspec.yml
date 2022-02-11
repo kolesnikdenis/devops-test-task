@@ -30,7 +30,7 @@ phases:
       - #//'mvn clean package'
   post_build:
     commands:
-      - echo "Delete old CONTAINER $CONTAINER_NAME"
+      - echo "Delete old CONTAINER $CONTAINER_NAME "
       - aws ecr batch-delete-image --repository-name $IMAGE_NAME --image-ids imageTag=$CONTAINER_NAME --region $AWS_REGION
       - echo $CONTAINER_NAME
       - docker image build -t $CONTAINER_NAME .
@@ -40,7 +40,6 @@ phases:
       - echo image name =  $IMAGE_NAME:$CONTAINER_NAME
       - echo image url = $REPOSITORY_URL/$IMAGE_NAME:$CONTAINER_NAME
       - docker push $REPOSITORY_URL/$IMAGE_NAME:$CONTAINER_NAME
-      #- aws ecr batch-delete-image --repository-name $IMAGE_NAME --image-ids imageTag=$CONTAINER_NAME --region $AWS_REGION
       - echo Writing image definitions file...
       - printf '[{"name":"'"$CONTAINER_NAME"'","imageUri":"'"$REPOSITORY_URL"'/'"$IMAGE_NAME"':latest"}]' > imagedefinitions.json
       - cat imagedefinitions.json
