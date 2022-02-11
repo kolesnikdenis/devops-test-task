@@ -1,7 +1,6 @@
 version: 0.2
 
 env:
-  shell: shell-tag
   variables:
     AWS_REGION: "eu-north-1"
     AWS_ACCOUNT_ID: "100230956415"
