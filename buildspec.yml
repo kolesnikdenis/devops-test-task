@@ -11,7 +11,7 @@ env:
     INSTANCE_ID: "i-091c99c198ad56e00"   
 
 phases:
-  install:
+  #install:
     #runtime-versions:
     #  java: corretto8
     #commands:
