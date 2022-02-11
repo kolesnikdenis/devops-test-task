@@ -9,7 +9,8 @@ env:
     IMAGE_NAME: "test"
     CONTAINER_NAME: "autobuild_test"
     INSTANCE_ID: "i-091c99c198ad56e00"   
-
+  secrets-manager:
+    LOCAL_SECRET_VAR: "TestSecret:suka"
 phases:
   #install:
     #runtime-versions:
@@ -27,7 +28,9 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - aws ssm send-command  --document-name "AWS-RunShellScript"     --targets '[{"Key":"InstanceIds","Values":["i-091c99c198ad56e00"]}]'     --parameters '{"commands":["ls -ls /"]}' --region=eu-north-1
+        #- aws ssm send-command  --document-name "AWS-RunShellScript"     --targets '[{"Key":"InstanceIds","Values":["i-091c99c198ad56e00"]}]'     --parameters '{"commands":["ls -ls /"]}' --region=eu-north-1
+      - echo LOCAL_SECRET_VAR
+      - echo $LOCAL_SECRET_VAR
       - #//'mvn clean package'
   post_build:
     commands:
