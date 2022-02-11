@@ -30,7 +30,7 @@ phases:
       - #//'mvn clean package'
   post_build:
     commands:
-      - echo "Delete old CONTAINER $CONTAINER_NAME "
+      - echo "Delete old CONTAINER $CONTAINER_NAME 3"
       - aws ecr batch-delete-image --repository-name $IMAGE_NAME --image-ids imageTag=$CONTAINER_NAME --region $AWS_REGION
       - echo $CONTAINER_NAME
       - docker image build -t $CONTAINER_NAME .
