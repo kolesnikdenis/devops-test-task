@@ -8,6 +8,7 @@ pwd
 #	docker push localhost:5000/devops-test-task && \
 #	docker rmi autobuild_test && \
 #	docker service rm devops-test-task
+ aws ecr list-images     --repository-name test --region  eu-north-1
 
 ) | tee -a /home/ubuntu/scripts/install_dependencies.log
 
