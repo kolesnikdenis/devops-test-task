@@ -1,6 +1,9 @@
 batch:
   fast-fail: false
 phases:
+  install:
+    commands:
+      - echo test
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -21,3 +24,7 @@ phases:
       - echo Pushing the Docker images...
     # - docker push $REPOSITORY_URI:latest
     # - docker push $REPOSITORY_URI:$IMAGE_TAG
+artifacts:
+  files:
+      - '**/*'
+  name: $AWS_REGION-$(date +%Y-%m-%d)
