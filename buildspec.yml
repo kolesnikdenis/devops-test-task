@@ -30,12 +30,14 @@ phases:
       - #//'mvn clean package'
   post_build:
     commands:
-      - docker image build -t $IMAGE_NAME .
-      - run="docker image tag $IMAGE_NAME:latest $REPOSITORY_URL/$IMAGE_NAME:latest"
+      - echo $CONTAINER_NAME
+      - docker image build -t $CONTAINER_NAME .
+      - run="docker image tag $IMAGE_NAME:latest $REPOSITORY_URL/$IMAGE_NAME:$CONTAINER_NAME"
       - echo $run
-      - docker image tag $IMAGE_NAME:latest $REPOSITORY_URL/$IMAGE_NAME:latest
+      - docker image tag $CONTAINER_NAME $REPOSITORY_URL/$IMAGE_NAME:$CONTAINER_NAME
       - echo image name =  $IMAGE_NAME:$CONTAINER_NAME
       - echo image url = $REPOSITORY_URL/$IMAGE_NAME:$CONTAINER_NAME
+      - docker ps -a 
       - docker push $REPOSITORY_URL/$IMAGE_NAME:$CONTAINER_NAME
       - echo Writing image definitions file...
       - printf '[{"name":"'"$CONTAINER_NAME"'","imageUri":"'"$REPOSITORY_URL"'/'"$IMAGE_NAME"':latest"}]' > imagedefinitions.json
