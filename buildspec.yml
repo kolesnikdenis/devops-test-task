@@ -8,13 +8,13 @@ env:
     AWS_DOMAIN_NAME: ".amazonaws.com"
     IMAGE_NAME: "test"
     CONTAINER_NAME: "autobuild_test"
-
+    INSTANCE_ID: "i-091c99c198ad56e00"   
 
 phases:
   install:
-    runtime-versions:
-      java: corretto8
-    commands:
+    #runtime-versions:
+    #  java: corretto8
+    #commands:
   pre_build:
     commands:
       - REPOSITORY_URL="$AWS_ACCOUNT_ID$AWS_SERVICE_NAME$AWS_REGION$AWS_DOMAIN_NAME"
@@ -44,8 +44,8 @@ phases:
       - printf '[{"name":"'"$CONTAINER_NAME"'","imageUri":"'"$REPOSITORY_URL"'/'"$IMAGE_NAME"':latest"}]' > imagedefinitions.json
       - cat imagedefinitions.json
       - echo Build completed on `date`
-
-
+     #- aws ec2-instance-connect send-ssh-public-key --region $AWS_REGION --instance-id $INSTANCE_ID --availability-zone $AWS_REGION --instance-os-user ec2-user --ssh-public-key file://tmp_key.pub
+     - aws ssm send-command  --document-name "AWS-RunShellScript"     --targets '[{"Key":"InstanceIds","Values":["i-091c99c198ad56e00"]}]'     --parameters '{"commands":["docker service update test"]}' --region=eu-north-1
 artifacts:
   files:
     - imagedefinitions.json
