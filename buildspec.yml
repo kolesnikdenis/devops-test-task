@@ -45,7 +45,8 @@ phases:
       - cat imagedefinitions.json
       - echo Build completed on `date`
      #- aws ec2-instance-connect send-ssh-public-key --region $AWS_REGION --instance-id $INSTANCE_ID --availability-zone $AWS_REGION --instance-os-user ec2-user --ssh-public-key file://tmp_key.pub
-     - aws ssm send-command  --document-name "AWS-RunShellScript"     --targets '[{"Key":"InstanceIds","Values":["i-091c99c198ad56e00"]}]'     --parameters '{"commands":["docker service update test"]}' --region=eu-north-1
+      - aws ssm send-command  --document-name "AWS-RunShellScript"     --targets '[{"Key":"InstanceIds","Values":["i-091c99c198ad56e00"]}]'     --parameters '{"commands":["docker service update test"]}' --region=eu-north-1
+      - echo "aws ssm send command end";
 artifacts:
   files:
     - imagedefinitions.json
