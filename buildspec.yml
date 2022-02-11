@@ -1,5 +1,6 @@
-batch:
-  fast-fail: false
+version: 0.2
+#batch:
+#  fast-fail: false
 phases:
   install:
     commands:
