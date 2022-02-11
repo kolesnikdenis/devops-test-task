@@ -37,8 +37,7 @@ phases:
       - docker image tag $CONTAINER_NAME $REPOSITORY_URL/$IMAGE_NAME:$CONTAINER_NAME
       - echo image name =  $IMAGE_NAME:$CONTAINER_NAME
       - echo image url = $REPOSITORY_URL/$IMAGE_NAME:$CONTAINER_NAME
-      - docker ps -a 
-      - docker push $REPOSITORY_URL/$IMAGE_NAME:$CONTAINER_NAME
+      #- aws ecr batch-delete-image --region $AWS_REGION | --repository-name $ECR_REPO --image-ids "$IMAGES_TO_DELETE" || true
       - echo Writing image definitions file...
       - printf '[{"name":"'"$CONTAINER_NAME"'","imageUri":"'"$REPOSITORY_URL"'/'"$IMAGE_NAME"':latest"}]' > imagedefinitions.json
       - cat imagedefinitions.json
