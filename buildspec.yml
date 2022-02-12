@@ -31,23 +31,23 @@ phases:
       - #//'mvn clean package'
   post_build:
     commands:
-       - echo "Delete old CONTAINER $CONTAINER_NAME 3"
-#      - aws ecr batch-delete-image --repository-name $IMAGE_NAME --image-ids imageTag=$CONTAINER_NAME --region $AWS_REGION
-#      - echo $CONTAINER_NAME
-#      - docker image build -t $CONTAINER_NAME .
-#      - run="docker image tag $CONTAINER_NAME $REPOSITORY_URL/$IMAGE_NAME:$CONTAINER_NAME"
-#      - echo $run
-#      - docker image tag $CONTAINER_NAME $REPOSITORY_URL/$IMAGE_NAME:$CONTAINER_NAME
-#      - echo image name =  $IMAGE_NAME:$CONTAINER_NAME
-#      - echo image url = $REPOSITORY_URL/$IMAGE_NAME:$CONTAINER_NAME
-#      - docker push $REPOSITORY_URL/$IMAGE_NAME:$CONTAINER_NAME
-#      - echo Writing image definitions file...
-#      - printf '[{"name":"'"$CONTAINER_NAME"'","imageUri":"'"$REPOSITORY_URL"'/'"$IMAGE_NAME"':latest"}]' > imagedefinitions.json
-#      - cat imagedefinitions.json
-#      - echo Build completed on `date`
-#     #- aws ec2-instance-connect send-ssh-public-key --region $AWS_REGION --instance-id $INSTANCE_ID --availability-zone $AWS_REGION --instance-os-user ec2-user --ssh-public-key file://tmp_key.pub
-#      - aws ssm send-command  --document-name "AWS-RunShellScript"     --targets '[{"Key":"InstanceIds","Values":["i-091c99c198ad56e00"]}]'     --parameters '{"commands":["docker service update test"]}' --region=eu-north-1
-#      - echo "aws ssm send command end";
+      - echo "Delete old CONTAINER $CONTAINER_NAME 3"
+      - aws ecr batch-delete-image --repository-name $IMAGE_NAME --image-ids imageTag=$CONTAINER_NAME --region $AWS_REGION
+      - echo $CONTAINER_NAME
+      - docker image build -t $CONTAINER_NAME .
+      - run="docker image tag $CONTAINER_NAME $REPOSITORY_URL/$IMAGE_NAME:$CONTAINER_NAME"
+      - echo $run
+      - docker image tag $CONTAINER_NAME $REPOSITORY_URL/$IMAGE_NAME:$CONTAINER_NAME
+      - echo image name =  $IMAGE_NAME:$CONTAINER_NAME
+      - echo image url = $REPOSITORY_URL/$IMAGE_NAME:$CONTAINER_NAME
+      - docker push $REPOSITORY_URL/$IMAGE_NAME:$CONTAINER_NAME
+      - echo Writing image definitions file...
+      - printf '[{"name":"'"$CONTAINER_NAME"'","imageUri":"'"$REPOSITORY_URL"'/'"$IMAGE_NAME"':latest"}]' > imagedefinitions.json
+      - cat imagedefinitions.json
+      - echo Build completed on `date`
+     #- aws ec2-instance-connect send-ssh-public-key --region $AWS_REGION --instance-id $INSTANCE_ID --availability-zone $AWS_REGION --instance-os-user ec2-user --ssh-public-key file://tmp_key.pub
+      - aws ssm send-command  --document-name "AWS-RunShellScript"     --targets '[{"Key":"InstanceIds","Values":["i-091c99c198ad56e00"]}]'     --parameters '{"commands":["docker service update test"]}' --region=eu-north-1
+      - echo "aws ssm send command end";
 artifacts:
   files:
     - imagedefinitions.json
