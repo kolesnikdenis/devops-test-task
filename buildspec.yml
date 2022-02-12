@@ -9,7 +9,7 @@ env:
     IMAGE_NAME: "test"
     CONTAINER_NAME: "autobuild_test"
     INSTANCE_ID: "i-091c99c198ad56e00"   
-
+    username: $username
 phases:
   #install:
     #runtime-versions:
