@@ -9,8 +9,8 @@ env:
     IMAGE_NAME: "test"
     CONTAINER_NAME: "autobuild_test"
     INSTANCE_ID: "i-091c99c198ad56e00"   
-    #  secrets-manager:
-    #    SUKA: SECRET_ID
+  secrets-manager:
+    SUKA: SECRET_ID
     #    SUKA: SECRET_ID
 
 phases:
