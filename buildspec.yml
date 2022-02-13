@@ -11,7 +11,6 @@ env:
     IMAGE_NAME: "test"
     CONTAINER_NAME: "autobuild_test"
     INSTANCE_ID: "i-091c99c198ad56e00"   
-    username: ${SE}
 phases:
   #install:
     #runtime-versions:
@@ -33,7 +32,7 @@ phases:
       - #//'mvn clean package'
   post_build:
     commands:
-      - echo "Delete old CONTAINER $CONTAINER_NAME 3 $username"
+      - echo "Delete old CONTAINER $CONTAINER_NAME"
       - aws ecr batch-delete-image --repository-name $IMAGE_NAME --image-ids imageTag=$CONTAINER_NAME --region $AWS_REGION
       - echo $CONTAINER_NAME
       - docker image build -t $CONTAINER_NAME .
@@ -47,9 +46,9 @@ phases:
       - printf '[{"name":"'"$CONTAINER_NAME"'","imageUri":"'"$REPOSITORY_URL"'/'"$IMAGE_NAME"':latest"}]' > imagedefinitions.json
       - cat imagedefinitions.json
       - echo Build completed on `date`
-     #- aws ec2-instance-connect send-ssh-public-key --region $AWS_REGION --instance-id $INSTANCE_ID --availability-zone $AWS_REGION --instance-os-user ec2-user --ssh-public-key file://tmp_key.pub
-      - aws ssm send-command  --document-name "AWS-RunShellScript"     --targets '[{"Key":"InstanceIds","Values":["i-091c99c198ad56e00"]}]'     --parameters '{"commands":["docker service update test"]}' --region=eu-north-1
-      - echo "aws ssm send command end";
+        #- export AWS_DEFAULT_REGION=$AWS_REGION
+        #- aws ssm send-command  --document-name "AWS-RunShellScript"     --targets '[{"Key":"InstanceIds","Values":["$INSTANCE_ID"]}]' --parameters '{"commands":["docker service update test"]}'
+        #- echo "aws ssm send command end";
 artifacts:
   files:
     - imagedefinitions.json
