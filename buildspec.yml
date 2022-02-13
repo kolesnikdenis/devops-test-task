@@ -46,9 +46,9 @@ phases:
       - printf '[{"name":"'"$CONTAINER_NAME"'","imageUri":"'"$REPOSITORY_URL"'/'"$IMAGE_NAME"':latest"}]' > imagedefinitions.json
       - cat imagedefinitions.json
       - echo Build completed on `date`
-        #- export AWS_DEFAULT_REGION=$AWS_REGION
-        #- aws ssm send-command  --document-name "AWS-RunShellScript"     --targets '[{"Key":"InstanceIds","Values":["$INSTANCE_ID"]}]' --parameters '{"commands":["docker service update test"]}'
-        #- echo "aws ssm send command end";
+      - export AWS_DEFAULT_REGION=$AWS_REGION
+      - aws ssm send-command  --document-name "AWS-RunShellScript"     --targets '[{"Key":"InstanceIds","Values":["$INSTANCE_ID"]}]' --parameters '{"commands":["docker service update test"]}'
+      - echo "aws ssm send command end";
 artifacts:
   files:
     - imagedefinitions.json
