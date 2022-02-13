@@ -11,7 +11,7 @@ env:
     IMAGE_NAME: "test"
     CONTAINER_NAME: "autobuild_test"
     INSTANCE_ID: "i-091c99c198ad56e00"
-    username2: $SE
+    username2: "$SE"
     username3: ${SE}
 phases:
   pre_build:
