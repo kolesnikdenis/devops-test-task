@@ -1,6 +1,8 @@
 version: 0.2
 
 env:
+  secrets-manager:
+    username: ${SE}
   variables:
     AWS_REGION: "eu-north-1"
     AWS_ACCOUNT_ID: "100230956415"
@@ -9,7 +11,7 @@ env:
     IMAGE_NAME: "test"
     CONTAINER_NAME: "autobuild_test"
     INSTANCE_ID: "i-091c99c198ad56e00"   
-    username: $username
+    #username: $username
 phases:
   #install:
     #runtime-versions:
@@ -31,7 +33,7 @@ phases:
       - #//'mvn clean package'
   post_build:
     commands:
-      - echo "Delete old CONTAINER $CONTAINER_NAME 3"
+      - echo "Delete old CONTAINER $CONTAINER_NAME 3 $username"
       - aws ecr batch-delete-image --repository-name $IMAGE_NAME --image-ids imageTag=$CONTAINER_NAME --region $AWS_REGION
       - echo $CONTAINER_NAME
       - docker image build -t $CONTAINER_NAME .
