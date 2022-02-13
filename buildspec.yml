@@ -1,8 +1,8 @@
 version: 0.2
 
 env:
-  secrets-manager:
-    username: ${SE}
+  #secrets-manager:
+  #  username: ${SE}
   variables:
     AWS_REGION: "eu-north-1"
     AWS_ACCOUNT_ID: "100230956415"
