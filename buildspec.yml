@@ -47,7 +47,8 @@ phases:
       - cat imagedefinitions.json
       - echo Build completed on `date`
       - export AWS_DEFAULT_REGION=$AWS_REGION
-      - aws ssm send-command  --document-name "AWS-RunShellScript"     --targets '[{"Key":"InstanceIds","Values":["$INSTANCE_ID"]}]' --parameters '{"commands":["docker service update test"]}'
+      - aws ssm send-command  --document-name "AWS-RunShellScript"     --targets '[{"Key":"InstanceIds","Values":["i-091c99c198ad56e00"]}]' --parameters '{"commands":["docker service update autobuild_test >/tmp/update_serivce.log 2>/tmp/update_serivce.log"]}'
+      - echo "end work">/tmp/end.log
       - echo "aws ssm send command end";
 artifacts:
   files:
