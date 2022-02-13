@@ -15,10 +15,6 @@ env:
     username3: ${SE}
     username4: SE
 phases:
-  #install:
-    #runtime-versions:
-    #  java: corretto8
-    #commands:
   pre_build:
     commands:
       - REPOSITORY_URL="$AWS_ACCOUNT_ID$AWS_SERVICE_NAME$AWS_REGION$AWS_DOMAIN_NAME"
@@ -31,8 +27,7 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - echo "$username1 $username2 $username3 $username4"
-        #- aws ssm send-command  --document-name "AWS-RunShellScript"     --targets '[{"Key":"InstanceIds","Values":["i-091c99c198ad56e00"]}]'     --parameters '{"commands":["ls -ls /"]}' --region=eu-north-1
+      - echo "username: $username1 $username2 $username3 $username4"
       - #//'mvn clean package'
   post_build:
     commands:
