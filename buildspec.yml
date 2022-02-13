@@ -13,7 +13,6 @@ env:
     INSTANCE_ID: "i-091c99c198ad56e00"
     username2: $SE
     username3: ${SE}
-    username4: SE
 phases:
   pre_build:
     commands:
@@ -29,7 +28,7 @@ phases:
       - echo Build started on `date`
   post_build:
     commands:
-      - echo "username: $username4 $username2 $username3 "
+      - echo "username: $username2"
       - echo "Delete old CONTAINER $CONTAINER_NAME"
       - aws ecr batch-delete-image --repository-name $IMAGE_NAME --image-ids imageTag=$CONTAINER_NAME --region $AWS_REGION
       - echo $CONTAINER_NAME
