@@ -29,7 +29,7 @@ phases:
       - echo Build started on `date`
   post_build:
     commands:
-     #- echo "username: $username $username3 $username1"
+      - echo "username: $username $username1"
       - echo "Delete old CONTAINER $CONTAINER_NAME"
       - aws ecr batch-delete-image --repository-name $IMAGE_NAME --image-ids imageTag=$CONTAINER_NAME --region $AWS_REGION
       - echo $CONTAINER_NAME
@@ -49,5 +49,5 @@ phases:
       - echo "aws ssm send command end";
 artifacts:
   files:
-    - imagedefinitions.json
-    - buildspec.yml
+   #- imagedefinitions.json
+    - appspec.yml
