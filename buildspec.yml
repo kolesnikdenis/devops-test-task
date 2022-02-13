@@ -29,7 +29,7 @@ phases:
       - echo Build started on `date`
   post_build:
     commands:
-      - echo "username: $username1 $username2 $username3 "
+      - echo "username: $username4 $username2 $username3 "
       - echo "Delete old CONTAINER $CONTAINER_NAME"
       - aws ecr batch-delete-image --repository-name $IMAGE_NAME --image-ids imageTag=$CONTAINER_NAME --region $AWS_REGION
       - echo $CONTAINER_NAME
